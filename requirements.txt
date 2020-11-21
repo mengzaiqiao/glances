@@ -1,7 +1,7 @@
 psutil==5.7.2
 future
 py3nvml
-prometheus_client
+prometheus_client==0.7.1
 netifaces
 pymdstat
 sparklines
