@@ -105,7 +105,8 @@ class Export(GlancesExport):
     def export(self, name, columns, points):
         """Write the points to the Prometheus exporter using Gauge."""
         logger.debug("Export {} stats to Prometheus exporter".format(name))
-
+        import socket
+        hostname = socket.gethostname()
         # Remove non number stats and convert all to float (for Boolean)
         data = {k: float(v) for (k, v) in iteritems(dict(zip(columns, points))) if isinstance(v, Number)}
         # Write metrics to the Prometheus exporter
@@ -116,6 +117,7 @@ class Export(GlancesExport):
             # See: https://prometheus.io/docs/practices/naming/
             for c in ['.', '-', '/', ' ']:
                 metric_name = metric_name.replace(c, self.METRIC_SEPARATOR)
+            metric_name = metric_name + self.METRIC_SEPARATOR + hostname
             # Get the labels
             labels = self.parse_tags(self.labels)
             # Manage an internal dict between metric name and Gauge
