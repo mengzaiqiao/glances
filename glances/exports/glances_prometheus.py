@@ -117,7 +117,7 @@ class Export(GlancesExport):
             # See: https://prometheus.io/docs/practices/naming/
             for c in ['.', '-', '/', ' ']:
                 metric_name = metric_name.replace(c, self.METRIC_SEPARATOR)
-            metric_name = metric_name + self.METRIC_SEPARATOR + hostname
+            metric_name = hostname + self.METRIC_SEPARATOR + metric_name
             # Get the labels
             labels = self.parse_tags(self.labels)
             # Manage an internal dict between metric name and Gauge
