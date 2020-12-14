@@ -27,7 +27,7 @@ RUN if [  "$VERSION" = "dev" ] ; then \
     echo Installing dev branch of glances from git; \
     apt-get update && apt-get install -y git && rm -rf /var/lib/apt/lists/* ; \
     pip3 install psutil bottle ; \
-    git clone -b develop https://github.com/nicolargo/glances.git ; \
+    git clone -b develop https://github.com/mengzaiqiao/glances.git ; \
   else \
     echo Installing glances from pip; \
     pip3 install glances[all]; \
@@ -37,7 +37,7 @@ RUN if [  "$VERSION" = "dev" ] ; then \
 WORKDIR /glances
 
 # EXPOSE PORT (XMLRPC / WebUI)
-EXPOSE 61209 61208
+EXPOSE 61209 61208 9091
 
 # Define default command.
-CMD python3 -m glances -C /glances/conf/glances.conf $GLANCES_OPT
+CMD python3 -m glances -C /glances/conf/glances.conf --export prometheus -q
